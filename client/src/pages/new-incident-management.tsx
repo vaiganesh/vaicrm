@@ -164,7 +164,7 @@ export default function NewIncidentManagement() {
   });
 
   const [openedTimestamp] = useState(new Date());
-  
+
   // Calculate target resolve date based on priority
   const calculateTargetDate = (priority: string) => {
     const targetDate = new Date();
@@ -226,11 +226,11 @@ export default function NewIncidentManagement() {
           targetResolveDate,
         }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to create incident');
       }
-      
+
       return response.json();
     },
     onSuccess: () => {
@@ -300,9 +300,9 @@ export default function NewIncidentManagement() {
   }, [hasUnsavedChanges]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header Bar - ServiceNow Style */}
-      <div className="bg-white border-b border-gray-300 shadow-sm">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      {/* Header Bar - Consolidated Single Bar */}
+      <div className="bg-white border-b border-gray-300 shadow-sm w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-4">
@@ -317,11 +317,28 @@ export default function NewIncidentManagement() {
               <div className="text-sm font-medium text-gray-700">
                 AzamTV Service Desk - New Incident
               </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 ml-4">
                 Incident #: <strong>{incidentNumber}</strong>
               </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button 
+                type="submit" 
+                disabled={createIncidentMutation.isPending}
+                className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-1.5 h-8 text-sm"
+              >
+                <Send className="h-3 w-3 mr-1" />
+                {createIncidentMutation.isPending ? 'Submitting...' : 'Submit'}
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline"
+                className="border-gray-400 text-gray-700 px-4 py-1.5 h-8 text-sm"
+                onClick={handleReset}
+              >
+                <RotateCcw className="h-3 w-3 mr-1" />
+                Clear
+              </Button>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                 <X className="h-4 w-4" />
               </Button>
@@ -330,654 +347,626 @@ export default function NewIncidentManagement() {
         </div>
       </div>
 
-      {/* Full Width Form Container */}
-      <div className="w-full p-4">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Toolbar */}
-            <div className="bg-white border border-gray-300 shadow-sm mb-4">
-              <div className="p-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <Button 
-                      type="submit" 
-                      disabled={createIncidentMutation.isPending}
-                      className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2"
-                    >
-                      <Send className="h-4 w-4 mr-2" />
-                      {createIncidentMutation.isPending ? 'Submitting...' : 'Submit'}
-                    </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline"
-                      className="border-gray-400 text-gray-700 px-6 py-2"
-                      onClick={handleReset}
-                    >
-                      <RotateCcw className="h-4 w-4 mr-2" />
-                      Clear
-                    </Button>
-                  </div>
-                  {hasUnsavedChanges && (
-                    <div className="text-sm text-amber-600 flex items-center">
-                      <AlertTriangle className="h-4 w-4 mr-2" />
-                      Unsaved changes
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+      {/* Form Container - Centered horizontally */}
+      <div className="w-full flex justify-center">
+        <div className="max-w-5xl w-full p-3">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Toolbar */}
 
-            {/* Form Content - Full Width Two Column Layout */}
-            <div className="bg-white border border-gray-300 shadow-sm">
-              <div className="p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Left Column - Incident Details */}
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-4 border-b border-gray-200 pb-2">
-                      Incident Details
-                    </h3>
-                    
-                    {/* Number */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Number</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value={incidentNumber} 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
+
+              {/* Form Content - Two Column Layout, compact */}
+              <div className="bg-white border border-gray-300 shadow-sm">
+                <div className="p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Left Column - Incident Details */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-1">
+                        Incident Details
+                      </h3>
+
+                      {/* Number */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Number</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value={incidentNumber} 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Client */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Client <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="client"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {clientOptions.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Common Faults */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">Common Faults</label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="commonFaults"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {commonFaultsOptions.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Category */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Category <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="category"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select 
-                                onValueChange={(value) => {
-                                  field.onChange(value);
-                                  setSelectedCategory(value);
-                                  form.setValue('subCategory', '');
-                                }} 
-                                value={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {categoryOptions.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Sub Category */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Sub Category <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="subCategory"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select 
-                                onValueChange={field.onChange} 
-                                value={field.value}
-                                disabled={!selectedCategory}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {selectedCategory && subCategoryMap[selectedCategory as keyof typeof subCategoryMap]?.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* State */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">State</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value="OPEN" 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Opened */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Opened</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value={openedTimestamp.toLocaleDateString() + ' 16:17'} 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Target Resolve Date */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Target Resolve Date</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value={targetResolveDate.toLocaleDateString()} 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Alternate Location */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">Alternate Location</label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="alternateLocation"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input 
-                                  {...field} 
-                                  className="h-8 text-sm"
-                                />
-                              </FormControl>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* White Board ID */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">White Board ID</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value="" 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column - Assignment & Contact */}
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-4 border-b border-gray-200 pb-2">
-                      Assignment & Contact
-                    </h3>
-
-                    {/* Opened by */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Opened by</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value="User ID" 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* User ID */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        User ID <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="userId"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="relative">
-                                <FormControl>
-                                  <Input 
-                                    {...field} 
-                                    placeholder="Search users..."
-                                    className="h-8 text-sm pr-8"
-                                    onChange={(e) => {
-                                      field.onChange(e.target.value);
-                                      setUserSearchQuery(e.target.value);
-                                    }}
-                                  />
-                                </FormControl>
-                                <Search className="h-3 w-3 absolute right-2 top-2.5 text-gray-400" />
-                                {userSearchQuery && userSearchResults.length > 0 && (
-                                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-32 overflow-y-auto">
-                                    {userSearchResults.map((user) => (
-                                      <button
-                                        key={user.id}
-                                        type="button"
-                                        className="w-full text-left px-3 py-2 hover:bg-gray-100 flex items-center text-sm"
-                                        onClick={() => {
-                                          field.onChange(user.id);
-                                          setSelectedUser(user);
-                                          setUserSearchQuery('');
-                                        }}
-                                      >
-                                        <User className="h-3 w-3 mr-2" />
-                                        <div>
-                                          <div className="font-medium">{user.name}</div>
-                                          <div className="text-xs text-gray-500">{user.id}</div>
-                                        </div>
-                                      </button>
+                      {/* Client */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Client <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="client"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {clientOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
                                     ))}
-                                  </div>
-                                )}
-                              </div>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Location */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Location</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value={selectedUser?.location || currentUser.location} 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Contact Number */}
-                    <div className="grid grid-cols-4 gap-3 items-center">
-                      <label className="text-sm text-gray-600">Contact Number</label>
-                      <div className="col-span-3">
-                        <Input 
-                          value={selectedUser?.contact || currentUser.contact} 
-                          disabled 
-                          className="h-8 bg-gray-50 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Configuration Item */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Configuration Item <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="configurationItem"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="relative">
-                                <FormControl>
-                                  <Input 
-                                    {...field} 
-                                    placeholder="Search assets..."
-                                    className="h-8 text-sm pr-8"
-                                    onChange={(e) => {
-                                      field.onChange(e.target.value);
-                                      setAssetSearchQuery(e.target.value);
-                                    }}
-                                  />
-                                </FormControl>
-                                <Monitor className="h-3 w-3 absolute right-2 top-2.5 text-gray-400" />
-                                {assetSearchQuery && assetSearchResults.length > 0 && (
-                                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-32 overflow-y-auto">
-                                    {assetSearchResults.map((asset) => (
-                                      <button
-                                        key={asset.id}
-                                        type="button"
-                                        className="w-full text-left px-3 py-2 hover:bg-gray-100 flex items-center text-sm"
-                                        onClick={() => {
-                                          field.onChange(asset.id);
-                                          setAssetSearchQuery('');
-                                        }}
-                                      >
-                                        <Monitor className="h-3 w-3 mr-2" />
-                                        <div>
-                                          <div className="font-medium">{asset.name}</div>
-                                          <div className="text-xs text-gray-500">{asset.id}</div>
-                                        </div>
-                                      </button>
+                      {/* Common Faults */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">Common Faults</label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="commonFaults"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {commonFaultsOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
                                     ))}
-                                  </div>
-                                )}
-                              </div>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Priority */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Priority <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="priority"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {priorityOptions.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Assignment Group */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">
-                        Assignment Group <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="assignmentGroup"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Please Specify" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {assignmentGroups.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Assigned To */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">Assigned To</label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="assignedTo"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input 
-                                  {...field} 
-                                  className="h-8 text-sm"
-                                />
-                              </FormControl>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Channel */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">Channel</label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="channel"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {channelOptions.map((option) => (
-                                    <SelectItem key={option.value} value={option.value} className="text-sm">
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Alternate Contact */}
-                    <div className="grid grid-cols-4 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2">Alternate Contact</label>
-                      <div className="col-span-3">
-                        <FormField
-                          control={form.control}
-                          name="alternateContact"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input 
-                                  {...field} 
-                                  className="h-8 text-sm"
-                                />
-                              </FormControl>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Full Width Description Fields */}
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <div className="space-y-4">
-                    {/* Short Description */}
-                    <div className="grid grid-cols-12 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2 col-span-2">
-                        Short Description <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-10">
-                        <FormField
-                          control={form.control}
-                          name="shortDescription"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-2">
-                                <FormControl>
-                                  <Input 
-                                    {...field} 
-                                    placeholder="Brief summary of the issue"
-                                    className="h-8 text-sm flex-1"
-                                  />
-                                </FormControl>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-8 w-8 p-0"
-                                  onClick={() => setShowKBSearch(!showKBSearch)}
+                      {/* Category */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Category <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="category"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select 
+                                  onValueChange={(value) => {
+                                    field.onChange(value);
+                                    setSelectedCategory(value);
+                                    form.setValue('subCategory', '');
+                                  }} 
+                                  value={field.value}
                                 >
-                                  <BookOpen className="h-4 w-4" />
-                                </Button>
-                              </div>
-                              {showKBSearch && (
-                                <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                                  <div className="text-sm text-blue-800">
-                                    💡 Knowledge Base Suggestions: Network troubleshooting, Software issues, Hardware diagnostics
-                                  </div>
-                                </div>
-                              )}
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {categoryOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Sub Category */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Sub Category <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="subCategory"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select 
+                                  onValueChange={field.onChange} 
+                                  value={field.value}
+                                  disabled={!selectedCategory}
+                                >
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {selectedCategory && subCategoryMap[selectedCategory as keyof typeof subCategoryMap]?.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* State */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">State</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value="OPEN" 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Opened */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Opened</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value={openedTimestamp.toLocaleDateString() + ' 16:17'} 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Target Resolve Date */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Target Resolve Date</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value={targetResolveDate.toLocaleDateString()} 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Alternate Location */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">Alternate Location</label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="alternateLocation"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input 
+                                    {...field} 
+                                    className="h-7 text-xs"
+                                  />
+                                </FormControl>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* White Board ID */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">White Board ID</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value="" 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    {/* Additional Comments */}
-                    <div className="grid grid-cols-12 gap-3 items-start">
-                      <label className="text-sm text-gray-600 pt-2 col-span-2">
-                        Additional Comments <span className="text-red-500">*</span>
-                      </label>
-                      <div className="col-span-10">
-                        <FormField
-                          control={form.control}
-                          name="additionalComments"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Textarea 
-                                  {...field} 
-                                  rows={6}
-                                  placeholder="Detailed description of the issue, steps to reproduce, error messages, etc."
-                                  className="text-sm resize-none"
-                                />
-                              </FormControl>
-                              <div className="text-right mt-1">
-                                <span className="text-xs text-gray-500">✓ Check Spelling</span>
-                              </div>
-                              <FormMessage className="text-xs" />
-                            </FormItem>
-                          )}
-                        />
+                    {/* Right Column - Assignment & Contact */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-1">
+                        Assignment & Contact
+                      </h3>
+
+                      {/* Opened by */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Opened by</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value="User ID" 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* User ID */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          User ID <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="userId"
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="relative">
+                                  <FormControl>
+                                    <Input 
+                                      {...field} 
+                                      placeholder="Search users..."
+                                      className="h-7 text-xs pr-8"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.value);
+                                        setUserSearchQuery(e.target.value);
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <Search className="h-3 w-3 absolute right-2 top-2 text-gray-400" />
+                                  {userSearchQuery && userSearchResults.length > 0 && (
+                                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-24 overflow-y-auto">
+                                      {userSearchResults.map((user) => (
+                                        <button
+                                          key={user.id}
+                                          type="button"
+                                          className="w-full text-left px-2 py-1.5 hover:bg-gray-100 flex items-center text-xs"
+                                          onClick={() => {
+                                            field.onChange(user.id);
+                                            setSelectedUser(user);
+                                            setUserSearchQuery('');
+                                          }}
+                                        >
+                                          <User className="h-3 w-3 mr-2" />
+                                          <div>
+                                            <div className="font-medium">{user.name}</div>
+                                            <div className="text-xs text-gray-500">{user.id}</div>
+                                          </div>
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Location */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Location</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value={selectedUser?.location || currentUser.location} 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Contact Number */}
+                      <div className="grid grid-cols-4 gap-2 items-center">
+                        <label className="text-xs text-gray-600">Contact Number</label>
+                        <div className="col-span-3">
+                          <Input 
+                            value={selectedUser?.contact || currentUser.contact} 
+                            disabled 
+                            className="h-7 bg-gray-50 text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Configuration Item */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Configuration Item <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="configurationItem"
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="relative">
+                                  <FormControl>
+                                    <Input 
+                                      {...field} 
+                                      placeholder="Search assets..."
+                                      className="h-7 text-xs pr-8"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.value);
+                                        setAssetSearchQuery(e.target.value);
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <Monitor className="h-3 w-3 absolute right-2 top-2 text-gray-400" />
+                                  {assetSearchQuery && assetSearchResults.length > 0 && (
+                                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-24 overflow-y-auto">
+                                      {assetSearchResults.map((asset) => (
+                                        <button
+                                          key={asset.id}
+                                          type="button"
+                                          className="w-full text-left px-2 py-1.5 hover:bg-gray-100 flex items-center text-xs"
+                                          onClick={() => {
+                                            field.onChange(asset.id);
+                                            setAssetSearchQuery('');
+                                          }}
+                                        >
+                                          <Monitor className="h-3 w-3 mr-2" />
+                                          <div>
+                                            <div className="font-medium">{asset.name}</div>
+                                            <div className="text-xs text-gray-500">{asset.id}</div>
+                                          </div>
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Priority */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Priority <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="priority"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {priorityOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Assignment Group */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">
+                          Assignment Group <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="assignmentGroup"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue placeholder="Please Specify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {assignmentGroups.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Assigned To */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">Assigned To</label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="assignedTo"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input 
+                                    {...field} 
+                                    className="h-7 text-xs"
+                                  />
+                                </FormControl>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Channel */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">Channel</label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="channel"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {channelOptions.map((option) => (
+                                      <SelectItem key={option.value} value={option.value} className="text-xs">
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Alternate Contact */}
+                      <div className="grid grid-cols-4 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5">Alternate Contact</label>
+                        <div className="col-span-3">
+                          <FormField
+                            control={form.control}
+                            name="alternateContact"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input 
+                                    {...field} 
+                                    className="h-7 text-xs"
+                                  />
+                                </FormControl>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Full Width Description Fields */}
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <div className="space-y-3">
+                      {/* Short Description */}
+                      <div className="grid grid-cols-12 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5 col-span-2">
+                          Short Description <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-10">
+                          <FormField
+                            control={form.control}
+                            name="shortDescription"
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="flex items-center space-x-2">
+                                  <FormControl>
+                                    <Input 
+                                      {...field} 
+                                      placeholder="Brief summary of the issue"
+                                      className="h-7 text-xs flex-1"
+                                    />
+                                  </FormControl>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 w-7 p-0"
+                                    onClick={() => setShowKBSearch(!showKBSearch)}
+                                  >
+                                    <BookOpen className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                {showKBSearch && (
+                                  <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                                    <div className="text-sm text-blue-800">
+                                      💡 Knowledge Base Suggestions: Network troubleshooting, Software issues, Hardware diagnostics
+                                    </div>
+                                  </div>
+                                )}
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Additional Comments */}
+                      <div className="grid grid-cols-12 gap-2 items-start">
+                        <label className="text-xs text-gray-600 pt-1.5 col-span-2">
+                          Additional Comments <span className="text-red-500">*</span>
+                        </label>
+                        <div className="col-span-10">
+                          <FormField
+                            control={form.control}
+                            name="additionalComments"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Textarea 
+                                    {...field} 
+                                    rows={4}
+                                    placeholder="Detailed description of the issue, steps to reproduce, error messages, etc."
+                                    className="text-xs resize-none"
+                                  />
+                                </FormControl>
+                                <div className="text-right mt-1">
+                                  <span className="text-xs text-gray-500">✓ Check Spelling</span>
+                                </div>
+                                <FormMessage className="text-xs" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+
+            </form>
+          </Form>
+
+          {/* Unsaved Changes Warning */}
+          {hasUnsavedChanges && (
+            <div className="fixed bottom-4 right-4 bg-amber-100 border border-amber-400 rounded-lg p-3 shadow-lg z-50">
+              <div className="text-sm text-amber-800 flex items-center">
+                <AlertTriangle className="h-4 w-4 mr-2" />
+                You have unsaved changes
+              </div>
             </div>
-
-
-          </form>
-        </Form>
-
-        {/* Unsaved Changes Warning */}
-        {hasUnsavedChanges && (
-          <div className="fixed bottom-4 right-4 bg-amber-100 border border-amber-400 rounded-lg p-3 shadow-lg z-50">
-            <div className="text-sm text-amber-800 flex items-center">
-              <AlertTriangle className="h-4 w-4 mr-2" />
-              You have unsaved changes
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
