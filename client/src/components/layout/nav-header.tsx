@@ -62,7 +62,6 @@ export default function NavHeader() {
         ];
       case 'inventory-management':
         return [
-          //{ title: "Inventory Management Center", subtitle: "Comprehensive inventory operations dashboard", icon: Monitor, path: "/inventory-management" },
           {
             title: "Stock Management", 
             subtitle: "Manage all stock operations", 
@@ -166,17 +165,6 @@ export default function NavHeader() {
       case 'subscriber-management':
         return [
           { title: "Search Subscriber", subtitle: "Find customer subscriptions", icon: Users, path: "/search-subscriber" },
-          //{ title: "Subscriber View", subtitle: "Detailed customer profile", icon: UserPlus, path: "/subscriber-view" },
-          //{ title: "Subscription Purchase", subtitle: "New subscription purchase", icon: CreditCard, path: "/subscription-purchase" },
-          //{ title: "Subscription Renewal", subtitle: "Renew existing plans", icon: Receipt, path: "/subscription-renewal" },
-          //{ title: "Plan Change", subtitle: "Change subscription plans", icon: Settings, path: "/plan-change" },
-          //{ title: "Offer Change", subtitle: "Change customer offers", icon: Settings, path: "/offer-change" },
-          //{ title: "Plan Validity Extension", subtitle: "Extend plan validity", icon: Settings, path: "/plan-validity-extension" },
-          //{ title: "Add-ON Packs", subtitle: "Manage add-on packages", icon: Package, path: "/addon-packs" },
-          //{ title: "Suspension", subtitle: "Suspend customer services", icon: Settings, path: "/customer-suspension" },
-          //{ title: "Reconnection", subtitle: "Reconnect suspended services", icon: Settings, path: "/customer-reconnection" },
-          //{ title: "Disconnection", subtitle: "Disconnect customer services", icon: Settings, path: "/customer-disconnection" },
-          //{ title: "Termination", subtitle: "Terminate customer accounts", icon: Settings, path: "/customer-termination" },
         ];
       case 'adjustment':
         return [
@@ -191,37 +179,20 @@ export default function NavHeader() {
       case 'bulk-management':
         return [
           { title: "New Upload & View", subtitle: "New & Upload bulk provisioning file", icon: Layers, path: "/bulk-provision" },
-          //{ title: "View Upload", subtitle: "View bulk upload history", icon: Layers, path: "/bulk-provision" },
-          //{ title: "Processing Status", subtitle: "Check processing status", icon: Layers, path: "/bulk-provision/status" },
-          //{ title: "Bulk Subscription", subtitle: "Bulk subscription management", icon: Layers, path: "/bulk-subscription" },
-          //{ title: "Bulk Payment Processing", subtitle: "Process payments in bulk", icon: Layers, path: "/bulk-payment" },
-          //{ title: "Bulk Customer Update", subtitle: "Update customer data in bulk", icon: Layers, path: "/bulk-customer-update" }
         ];
       case 'agent-commission':
         return [
           { title: "View Commission", subtitle: "View agent commissions", icon: DollarSign, path: "/agent-commission" },
-          //{ title: "Commission Reports", subtitle: "View commission reports", icon: DollarSign, path: "/agent-commission/reports" },
-          //{ title: "Payment Processing", subtitle: "Process commission payments", icon: DollarSign, path: "/agent-commission/payments" },
-          //{ title: "Commission Calculation", subtitle: "Calculate agent commissions", icon: DollarSign, path: "/agent-commission/calculation" },
-          //{ title: "Agent Performance", subtitle: "Track agent performance metrics", icon: DollarSign, path: "/agent-commission/performance" }
         ];
       case 'provisioning':
         return [
           { title: "Provisioning", subtitle: "On-Screen Display management", icon: Cog, path: "/provisioning" },
-          //{ title: "Region OSD", subtitle: "Regional OSD management", icon: Cog, path: "/provisioning" },
-          //{ title: "Fingerprint Single", subtitle: "Single device fingerprinting", icon: Cog, path: "/provisioning/fingerprint-single" },
-          //{ title: "Fingerprint Region", subtitle: "Regional fingerprinting", icon: Cog, path: "/provisioning/fingerprint-region" },
-          //{ title: "Blacklist STB", subtitle: "Blacklist Set-Top Box devices", icon: Cog, path: "/provisioning/blacklist" },
-          //{ title: "Send B Mail", subtitle: "Send broadcast mail", icon: Cog, path: "/provisioning/bmail" }
         ];
       case 'reports':
         return [
           { title: "Daily Reports", subtitle: "View daily operational reports", icon: BarChart3, path: "/reports/daily" },
           { title: "TRA Reports", subtitle: "View TRA reports", icon: BarChart3, path: "/reports/TRA" },
           { title: "TCRA Reports", subtitle: "View TCRA reports", icon: BarChart3, path: "/reports/TCRA" },
-          //{ title: "Revenue Reports", subtitle: "Track revenue and financial metrics", icon: BarChart3, path: "/reports/revenue" },
-          //{ title: "Subscription Analytics", subtitle: "Analyze subscription trends", icon: BarChart3, path: "/reports/subscription-analytics" },
-          //{ title: "Customer Analytics", subtitle: "Analyze customer behavior", icon: BarChart3, path: "/reports/customer-analytics" }
         ];
       default:
         return [];
@@ -263,8 +234,6 @@ export default function NavHeader() {
   // All navigation items combined for hamburger menu
   const allNavigationItems = getNavigationItems();
 
-  const isOnboardingActive = location.startsWith("/onboarding");
-
   // Helper function to check if a navigation item should be active
   const isNavigationItemActive = (item: NavigationItem) => {
     // Direct path match
@@ -283,25 +252,22 @@ export default function NavHeader() {
     if (itemName.includes('approval') && location.startsWith('/kyc-approval')) {
       return true;
     }
-    if (itemName.includes('inventory') && (location.startsWith('/inventory') || location.startsWith('/stock-') || location.startsWith('/cas-id-change') || location.startsWith('/stb-sc-pairing') || location.startsWith('/track-serial') || location.startsWith('/warehouse-transfer') || location.startsWith('/block-unblock'))) {
+    if (itemName.includes('inventory') && (location.startsWith('/inventory') || location.startsWith('/stock') || location.startsWith('/cas-id') || location.startsWith('/stb-sc') || location.startsWith('/track-serial') || location.startsWith('/warehouse') || location.startsWith('/block-unblock') || location.startsWith('/agent-replacement') || location.startsWith('/po-') || location.startsWith('/customer-hardware') || location.startsWith('/agent-hardware') || location.startsWith('/agent-faulty'))) {
       return true;
     }
-    if (itemName.includes('payment') && (location.startsWith('/payment') || location.startsWith('/agent-payment') || location.startsWith('/customer-payment') || location.startsWith('/receipt-cancellation') || location.startsWith('/customer-transfer'))) {
+    if (itemName.includes('payment') && (location.startsWith('/payment') || location.startsWith('/receipt') || location.startsWith('/customer-transfer'))) {
       return true;
     }
-    if (itemName.includes('subscriber') && (location.startsWith('/subscription') || location.startsWith('/search-subscriber') || location.startsWith('/subscriber-view') || location.startsWith('/purchase-subscription') || location.startsWith('/subscription-renewal') || location.startsWith('/plan-change') || location.startsWith('/offer-change') || location.startsWith('/plan-validity-extension') || location.startsWith('/addon-packs') || location.startsWith('/customer-suspension') || location.startsWith('/customer-reconnection') || location.startsWith('/customer-disconnection') || location.startsWith('/customer-termination'))) {
+    if (itemName.includes('subscriber') && location.startsWith('/search-subscriber')) {
       return true;
     }
-    if (itemName.includes('service') && location.startsWith('/service-ticketing')) {
+    if (itemName.includes('adjustment') && location.startsWith('/adjustment')) {
       return true;
     }
-    if (itemName.includes('adjustment') && (location.startsWith('/adjustment') || location.startsWith('/create-adjustment') || location.startsWith('/adjustment-approval'))) {
+    if (itemName.includes('service') && (location.startsWith('/service-ticketing') || location.startsWith('/new-incident'))) {
       return true;
     }
-    if (itemName.includes('service') && (location.startsWith('/service-ticketing') || location.startsWith('/new-incident-management'))) {
-      return true;
-    }
-    if (itemName.includes('bulk') && (location.startsWith('/bulk-'))) {
+    if (itemName.includes('bulk') && location.startsWith('/bulk')) {
       return true;
     }
     if (itemName.includes('commission') && (location.startsWith('/agent-commission'))) {
@@ -485,66 +451,47 @@ export default function NavHeader() {
               // Check if module has subPages to render as expandable
               if (module.subPages && module.subPages.length > 0) {
                 return (
-                  <div key={index} className="relative group">
-                    <div
-                      className={`flex items-center space-x-3 p-3 rounded-lg ${hoverBgClass} transition-all duration-200 cursor-pointer border border-transparent hover:border-white hover:shadow-sm`}
-                    >
-                      <div className="flex-shrink-0">
-                        <Icon className={`h-5 w-5 ${iconColorClass} group-hover:scale-110 transition-transform duration-200`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 group-hover:text-azam-blue transition-colors duration-200 truncate">
-                          {module.title}
-                        </p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {module.subtitle}
-                        </p>
-                      </div>
-                      <ChevronRight className="h-3 w-3 text-gray-400 group-hover:text-azam-blue" />
-                    </div>
-
-                    {/* Nested submenu for subPages - Vertical Layout */}
-                    <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-gray-200 shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                      <div className="p-3">
-                        <div className="mb-2 pb-2 border-b border-gray-100">
-                          <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                            {module.title} - Internal Pages
-                          </p>
+                  <div key={index} className="space-y-2">
+                    {/* Category Header */}
+                    <div className={`p-3 bg-white/50 border border-gray-200 rounded-lg ${hoverBgClass}`}>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Icon className={`h-4 w-4 ${iconColorClass}`} />
+                        <div>
+                          <p className="font-semibold text-sm text-gray-800">{module.title}</p>
+                          <p className="text-xs text-gray-500">{module.subtitle}</p>
                         </div>
-                        <div className="space-y-1">
-                          {module.subPages.map((subPage, subIndex) => {
-                            const SubIcon = subPage.icon;
-                            const subIconColorClass = getIconColor(subPage.title);
-                            const subHoverBgClass = getHoverBg(subPage.title);
+                      </div>
 
-                            return (
-                              <div
-                                key={subIndex}
-                                onClick={() => setLocation(subPage.path)}
-                                className={`flex items-center space-x-3 p-2.5 rounded-md ${subHoverBgClass} transition-all duration-200 cursor-pointer group/sub border border-transparent hover:border-gray-200 hover:shadow-sm`}
-                              >
-                                <div className="flex-shrink-0">
-                                  <SubIcon className={`h-4 w-4 ${subIconColorClass} group-hover/sub:scale-110 transition-transform duration-200`} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium text-gray-900 group-hover/sub:text-azam-blue transition-colors duration-200">
-                                    {subPage.title}
-                                  </p>
-                                  <p className="text-xs text-gray-500 mt-0.5">
-                                    {subPage.subtitle}
-                                  </p>
-                                </div>
+                      {/* Sub-pages grid */}
+                      <div className="space-y-1 max-h-48 overflow-y-auto">
+                        {module.subPages.map((subPage, subPageIndex) => {
+                          const SubPageIcon = subPage.icon;
+                          const subPageIconColorClass = getIconColor(subPage.title);
+                          const subPageHoverBgClass = getHoverBg(subPage.title);
+
+                          return (
+                            <div
+                              key={subPageIndex}
+                              onClick={() => setLocation(subPage.path)}
+                              className={`cursor-pointer p-2 flex items-center space-x-2 rounded-md transition-all duration-200 ${subPageHoverBgClass} hover:shadow-sm`}
+                            >
+                              <SubPageIcon className={`h-3 w-3 flex-shrink-0 ${subPageIconColorClass}`} />
+                              <div className="flex-1 min-w-0">
+                                <p className="font-medium text-xs text-gray-900 truncate">{subPage.title}</p>
+                                <p className="text-[10px] text-gray-500 truncate">
+                                  {subPage.subtitle}
+                                </p>
                               </div>
-                            );
-                          })}
-                        </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
                 );
               }
 
-              // Regular module without subPages
+              // Regular module without sub-pages
               return (
                 <div
                   key={index}
@@ -572,445 +519,301 @@ export default function NavHeader() {
   };
 
   return (
-    <div className="relative bg-azam-blue px-2 sm:px-3 md:px-4 py-0">
-      <div className={`flex items-center justify-between w-full ${isMobile ? 'h-12' : 'h-10'}`}>
-        {/* Hamburger Menu Button */}
-        <div className={`flex-shrink-0 ${isMobile ? 'mr-2' : 'mr-3'}`}>
-          <DropdownMenu open={isHamburgerOpen} onOpenChange={setIsHamburgerOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`flex items-center justify-center p-0 text-white hover:bg-white/10 rounded-lg transition-all duration-300 hover:scale-105 ${
-                  isMobile ? 'w-10 h-10' : 'w-9 h-9'
-                }`}
-              >
-                <Menu className={`${isMobile ? 'h-6 w-6' : 'h-5 w-5'}`} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent 
-              align="start" 
-              className={`mt-1 bg-gradient-to-b from-slate-50 to-white shadow-xl border border-slate-200 rounded-lg max-h-[80vh] overflow-y-auto ${
-                isMobile ? 'w-[95vw] max-w-sm' : 'w-80'  
-              }`}
-              sideOffset={4}
-            >
-              <div className={`${isMobile ? 'p-3' : 'p-2'}`}>
-                <div className={`mb-3 pb-2 border-b border-gray-200 ${isMobile ? 'px-1' : 'px-2'}`}>
-                  <p className={`${isMobile ? 'text-base' : 'text-sm'} font-semibold text-azam-blue uppercase tracking-wide`}>
-                    Navigation Menu
-                  </p>
-                </div>
+    <>
+      {/* Overlay for mobile when menu is open */}
+      {isHamburgerOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+          onClick={() => setIsHamburgerOpen(false)}
+        />
+      )}
 
-                {/* Core Navigation Items */}
-                <div className="space-y-1">
-                  {coreNavigationItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = isNavigationItemActive(item);
+      {/* Full-length side menu */}
+      <div className={`fixed top-0 left-0 h-full bg-gradient-to-b from-slate-50 to-white shadow-xl border-r border-slate-200 z-50 transition-transform duration-300 ease-in-out overflow-y-auto ${
+        isHamburgerOpen ? 'translate-x-0' : '-translate-x-full'
+      } ${isMobile ? 'w-80' : 'w-96'}`}>
+        {/* Close button */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-azam-blue text-white">
+          <h2 className="text-lg font-semibold">Navigation Menu</h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsHamburgerOpen(false)}
+            className="text-white hover:bg-white/10 p-2"
+          >
+            ✕
+          </Button>
+        </div>
 
-                    const getItemColors = (name: string) => {
-                      const lowerName = name.toLowerCase();
-                      if (lowerName.includes('dashboard')) {
-                        return {
-                          icon: isActive ? "text-blue-600" : "text-blue-500",
-                          hover: "hover:bg-blue-50 hover:text-blue-700",
-                          active: "bg-blue-50/80 text-blue-700 border-l-2 border-blue-500"
-                        };
-                      }
-                      if (lowerName.includes('onboarding')) {
-                        return {
-                          icon: isActive ? "text-orange-600" : "text-orange-500",
-                          hover: "hover:bg-orange-50 hover:text-orange-700",
-                          active: "bg-orange-50/80 text-orange-700 border-l-2 border-orange-500"
-                        };
-                      }
-                      if (lowerName.includes('inventory')) {
-                        return {
-                          icon: isActive ? "text-green-600" : "text-green-500",
-                          hover: "hover:bg-green-50 hover:text-green-700",
-                          active: "bg-green-50/80 text-green-700 border-l-2 border-green-500"
-                        };
-                      }
-                      if (lowerName.includes('payment')) {
-                        return {
-                          icon: isActive ? "text-purple-600" : "text-purple-500",
-                          hover: "hover:bg-purple-50 hover:text-purple-700",
-                          active: "bg-purple-50/80 text-purple-700 border-l-2 border-purple-500"
-                        };
-                      }
-                      if (lowerName.includes('subscriber')) {
-                        return {
-                          icon: isActive ? "text-orange-600" : "text-orange-500",
-                          hover: "hover:bg-orange-50 hover:text-orange-700",
-                          active: "bg-orange-50/80 text-orange-700 border-l-2 border-orange-500"
-                        };
-                      }
-                      if (lowerName.includes('adjustment')) {
-                        return {
-                          icon: isActive ? "text-gray-600" : "text-gray-500",
-                          hover: "hover:bg-gray-50 hover:text-gray-700",
-                          active: "bg-gray-50/80 text-gray-700 border-l-2 border-gray-500"
-                        };
-                      }
-                      return {
-                        icon: isActive ? "text-azam-blue" : "text-gray-500",
-                        hover: "hover:bg-azam-blue/5 hover:text-azam-blue",
-                        active: "bg-azam-blue/5 text-azam-blue border-l-2 border-azam-blue"
-                      };
-                    };
+        <div className="p-4">
+          {/* Core Navigation Items */}
+          <div className="space-y-1">
+            {coreNavigationItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = isNavigationItemActive(item);
 
-                    const colors = getItemColors(item.name);
+              const getItemColors = (name: string) => {
+                const lowerName = name.toLowerCase();
+                if (lowerName.includes('dashboard')) {
+                  return {
+                    icon: isActive ? "text-blue-600" : "text-blue-500",
+                    hover: "hover:bg-blue-50 hover:text-blue-700",
+                    active: "bg-blue-50/80 text-blue-700 border-l-2 border-blue-500"
+                  };
+                }
+                if (lowerName.includes('onboarding')) {
+                  return {
+                    icon: isActive ? "text-orange-600" : "text-orange-500",
+                    hover: "hover:bg-orange-50 hover:text-orange-700",
+                    active: "bg-orange-50/80 text-orange-700 border-l-2 border-orange-500"
+                  };
+                }
+                if (lowerName.includes('inventory')) {
+                  return {
+                    icon: isActive ? "text-green-600" : "text-green-500",
+                    hover: "hover:bg-green-50 hover:text-green-700",
+                    active: "bg-green-50/80 text-green-700 border-l-2 border-green-500"
+                  };
+                }
+                if (lowerName.includes('payment')) {
+                  return {
+                    icon: isActive ? "text-purple-600" : "text-purple-500",
+                    hover: "hover:bg-purple-50 hover:text-purple-700",
+                    active: "bg-purple-50/80 text-purple-700 border-l-2 border-purple-500"
+                  };
+                }
+                if (lowerName.includes('subscriber')) {
+                  return {
+                    icon: isActive ? "text-orange-600" : "text-orange-500",
+                    hover: "hover:bg-orange-50 hover:text-orange-700",
+                    active: "bg-orange-50/80 text-orange-700 border-l-2 border-orange-500"
+                  };
+                }
+                if (lowerName.includes('adjustment')) {
+                  return {
+                    icon: isActive ? "text-gray-600" : "text-gray-500",
+                    hover: "hover:bg-gray-50 hover:text-gray-700",
+                    active: "bg-gray-50/80 text-gray-700 border-l-2 border-gray-500"
+                  };
+                }
+                return {
+                  icon: isActive ? "text-azam-blue" : "text-gray-500",
+                  hover: "hover:bg-azam-blue/5 hover:text-azam-blue",
+                  active: "bg-azam-blue/5 text-azam-blue border-l-2 border-azam-blue"
+                };
+              };
 
-                    if (item.subModules && item.subModules.length > 0) {
-                      const isExpanded = expandedSections.has(item.name);
+              const colors = getItemColors(item.name);
 
-                      if (isMobile) {
-                        // Mobile: Collapsible vertical layout
-                        return (
-                          <div key={item.path} className="space-y-1">
-                            {/* Parent Item */}
-                            <div
-                              onClick={() => toggleSection(item.name)}
-                              className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
-                            >
-                              <div className={`flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'}`}>
-                                <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                                <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
-                              </div>
-                              <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-                            </div>
+              if (item.subModules && item.subModules.length > 0) {
+                const isExpanded = expandedSections.has(item.name);
 
-                            {/* Internal Sections - Below Parent */}
-                            {isExpanded && (
-                              <div className={`${isMobile ? 'mobile-nav-expanded' : 'ml-6 pl-3'} space-y-1 border-l-2 border-gray-100`}>
-                                {item.subModules.map((subModule, subIndex) => {
-                                  const SubIcon = subModule.icon;
-                                  const subIconColorClass = getIconColor(subModule.title);
-                                  const subHoverBgClass = getHoverBg(subModule.title);
-                                  const isSubActive = location === subModule.path;
+                return (
+                  <div key={item.path} className="space-y-1">
+                    {/* Parent Item */}
+                    <div
+                      onClick={() => toggleSection(item.name)}
+                      className={`cursor-pointer p-4 flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
+                    >
+                      <div className="flex items-center space-x-4">
+                        <Icon className="h-5 w-5 flex-shrink-0 text-current" />
+                        <span className="font-medium text-base">{item.name}</span>
+                      </div>
+                      <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                    </div>
 
-                                  // Check if this module has sub-pages
-                                  if (subModule.subPages && subModule.subPages.length > 0) {
-                                    return (
-                                      <div key={subIndex} className="border-b border-gray-100 last:border-b-0 py-2">
-                                        {/* Category Header */}
-                                        <div className="px-2 py-1 bg-gray-50/50 border-l-2 border-azam-blue/20 rounded-sm">
-                                          <div className="flex items-center space-x-2">
-                                            <SubIcon className={`h-3 w-3 ${subIconColorClass}`} />
-                                            <div>
-                                              <p className="font-semibold text-xs text-gray-800">{subModule.title}</p>
-                                              <p className="text-[10px] text-gray-600">{subModule.subtitle}</p>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        {/* Sub-pages */}
-                                        <div className="pl-4 space-y-1 mt-1">
-                                          {subModule.subPages.map((subPage, subPageIndex) => {
-                                            const SubPageIcon = subPage.icon;
-                                            const subPageIconColorClass = getIconColor(subPage.title);
-                                            const subPageHoverBgClass = getHoverBg(subPage.title);
-                                            const isSubPageActive = location === subPage.path;
+                    {/* Expanded Sections */}
+                    {isExpanded && (
+                      <div className="ml-6 pl-3 space-y-1 border-l-2 border-gray-100">
+                        {item.subModules.map((subModule, subIndex) => {
+                          const SubIcon = subModule.icon;
+                          const subIconColorClass = getIconColor(subModule.title);
+                          const subHoverBgClass = getHoverBg(subModule.title);
+                          const isSubActive = location === subModule.path;
 
-                                            return (
-                                              <div
-                                                key={subPageIndex}
-                                                onClick={() => {
-                                                  setLocation(subPage.path);
-                                                  setIsHamburgerOpen(false);
-                                                }}
-                                                className={`cursor-pointer p-2 flex items-start space-x-2 rounded-md transition-all duration-200 ${isSubPageActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subPageHoverBgClass}`}
-                                              >
-                                                <SubPageIcon className={`h-3 w-3 mt-0.5 flex-shrink-0 ${subPageIconColorClass}`} />
-                                                <div className="flex-1 min-w-0">
-                                                  <p className="font-medium text-xs text-gray-900 leading-tight">{subPage.title}</p>
-                                                  <p className="text-[10px] text-gray-500 leading-tight mt-0.5 whitespace-normal">{subPage.subtitle}</p>
-                                                </div>
-                                              </div>
-                                            );
-                                          })}
-                                        </div>
-                                      </div>
-                                    );
-                                  }
-
-                                  // Regular module without sub-pages
-                                  return (
-                                    <div
-                                      key={subIndex}
-                                      onClick={() => {
-                                        setLocation(subModule.path);
-                                        setIsHamburgerOpen(false);
-                                      }}
-                                      className={`cursor-pointer ${isMobile ? 'mobile-nav-item' : 'p-2'} flex items-start ${isMobile ? 'space-x-3' : 'space-x-2'} rounded-md transition-all duration-200 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
-                                    >
-                                      <SubIcon className={`${isMobile ? 'h-4 w-4 mt-0.5' : 'h-3 w-3'} flex-shrink-0 ${subIconColorClass}`} />
-                                      <div className="flex-1 min-w-0">
-                                        <p className={`font-medium ${isMobile ? 'text-sm' : 'text-xs'} text-gray-900 leading-tight`}>{subModule.title}</p>
-                                        <p className={`${isMobile ? 'mobile-nav-subtitle' : 'text-[10px]'} text-gray-500 leading-tight mt-0.5 whitespace-normal`}>{subModule.subtitle}</p>
-                                      </div>
+                          // Check if this module has sub-pages
+                          if (subModule.subPages && subModule.subPages.length > 0) {
+                            return (
+                              <div key={subIndex} className="border-b border-gray-100 last:border-b-0 py-2">
+                                {/* Category Header */}
+                                <div className="px-2 py-1 bg-gray-50/50 border-l-2 border-azam-blue/20 rounded-sm">
+                                  <div className="flex items-center space-x-2">
+                                    <SubIcon className={`h-4 w-4 ${subIconColorClass}`} />
+                                    <div>
+                                      <p className="font-semibold text-sm text-gray-800">{subModule.title}</p>
+                                      <p className="text-xs text-gray-600">{subModule.subtitle}</p>
                                     </div>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      } else {
-                        // Desktop: Nested dropdown (original behavior)
-                        return (
-                          <DropdownMenuSub key={item.path}>
-                            <DropdownMenuSubTrigger className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}>
-                              <div className={`flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'}`}>
-                                <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                                <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
-                              </div>
-
-                            </DropdownMenuSubTrigger>
-                            <DropdownMenuSubContent className={`${isMobile ? 'w-80' : 'w-96'} bg-gradient-to-b from-slate-50 to-white shadow-lg border border-slate-200 rounded-lg max-h-[70vh] overflow-y-auto`}>
-                              {item.subModules.map((subModule, subIndex) => {
-                                const SubIcon = subModule.icon;
-                                const subIconColorClass = getIconColor(subModule.title);
-                                const subHoverBgClass = getHoverBg(subModule.title);
-                                const isSubActive = location === subModule.path;
-
-                                // Check if this module has sub-pages
-                                if (subModule.subPages && subModule.subPages.length > 0) {
-                                  return (
-                                    <div key={subIndex} className="border-b border-gray-100 last:border-b-0 py-2">
-                                      {/* Category Header */}
-                                      <div className="px-3 py-2 bg-gray-50/50 border-l-4 border-azam-blue/20">
-                                        <div className="flex items-center space-x-2">
-                                          <SubIcon className={`h-4 w-4 ${subIconColorClass}`} />
-                                          <div>
-                                            <p className="font-semibold text-sm text-gray-800">{subModule.title}</p>
-                                            <p className="text-xs text-gray-600">{subModule.subtitle}</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      {/* Sub-pages */}
-                                      <div className="pl-6 space-y-1 mt-2">
-                                        {subModule.subPages.map((subPage, subPageIndex) => {
-                                          const SubPageIcon = subPage.icon;
-                                          const subPageIconColorClass = getIconColor(subPage.title);
-                                          const subPageHoverBgClass = getHoverBg(subPage.title);
-                                          const isSubPageActive = location === subPage.path;
-
-                                          return (
-                                            <DropdownMenuItem
-                                              key={subPageIndex}
-                                              onClick={() => {
-                                                setLocation(subPage.path);
-                                                setIsHamburgerOpen(false);
-                                              }}
-                                              className={`cursor-pointer p-2 flex items-center space-x-2 rounded-md transition-all duration-200 mx-1 ${isSubPageActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subPageHoverBgClass}`}
-                                            >
-                                              <SubPageIcon className={`h-3 w-3 flex-shrink-0 ${subPageIconColorClass}`} />
-                                              <div className="flex-1 min-w-0">
-                                                <p className="font-medium text-xs text-gray-900 truncate">{subPage.title}</p>
-                                                <p className="text-[10px] text-gray-500 truncate">{subPage.subtitle}</p>
-                                              </div>
-                                            </DropdownMenuItem>
-                                          );
-                                        })}
-                                      </div>
-                                    </div>
-                                  );
-                                }
-
-                                // Regular module without sub-pages
-                                return (
-                                  <DropdownMenuItem
-                                    key={subIndex}
-                                    onClick={() => {
-                                      setLocation(subModule.path);
-                                      setIsHamburgerOpen(false);
-                                    }}
-                                    className={`cursor-pointer p-3 flex items-center space-x-3 rounded-md transition-all duration-200 mx-1 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
-                                  >
-                                    <SubIcon className={`h-4 w-4 flex-shrink-0 ${subIconColorClass}`} />
-                                    <div className="flex-1">
-                                      <p className="font-medium text-sm text-gray-900">{subModule.title}</p>
-                                      <p className="text-xs text-gray-500 truncate">{subModule.subtitle}</p>
-                                    </div>
-                                  </DropdownMenuItem>
-                                );
-                              })}
-                            </DropdownMenuSubContent>
-                          </DropdownMenuSub>
-                        );
-                      }
-                    }
-
-                    return (
-                      <DropdownMenuItem
-                        key={item.path}
-                        onClick={() => {
-                          setLocation(item.path);
-                          setIsHamburgerOpen(false);
-                        }}
-                        className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'} rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
-                      >
-                        <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                        <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
-                      </DropdownMenuItem>
-                    );
-                  })}
-                </div>
-
-                {/* Operations Section */}
-                <div className="mt-4 pt-3 border-t border-gray-200">
-                  <div className={`mb-2 ${isMobile ? 'px-1' : 'px-2'}`}>
-                    <p className={`${isMobile ? 'text-sm' : 'text-xs'} font-semibold text-red-600 uppercase tracking-wide`}>
-                      Operations
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    {operationsItems.map((item) => {
-                      const Icon = item.icon;
-                      const isActive = isNavigationItemActive(item);
-
-                      const getOperationsColors = (name: string) => {
-                        const lowerName = name.toLowerCase();
-                        if (lowerName.includes('service') || lowerName.includes('bulk') || lowerName.includes('reports')) {
-                          return {
-                            icon: isActive ? "text-red-600" : "text-red-500",
-                            hover: "hover:bg-red-50 hover:text-red-700",
-                            active: "bg-red-50/80 text-red-700 border-l-2 border-red-500"
-                          };
-                        }
-                        if (lowerName.includes('commission')) {
-                          return {
-                            icon: isActive ? "text-yellow-600" : "text-yellow-500",
-                            hover: "hover:bg-yellow-50 hover:text-yellow-700",
-                            active: "bg-yellow-50/80 text-yellow-700 border-l-2 border-yellow-500"
-                          };
-                        }
-                        if (lowerName.includes('provisioning')) {
-                          return {
-                            icon: isActive ? "text-indigo-600" : "text-indigo-500",
-                            hover: "hover:bg-indigo-50 hover:text-indigo-700",
-                            active: "bg-indigo-50/80 text-indigo-700 border-l-2 border-indigo-500"
-                          };
-                        }
-                        return {
-                          icon: isActive ? "text-red-600" : "text-red-500",
-                          hover: "hover:bg-red-50 hover:text-red-700",
-                          active: "bg-red-50/80 text-red-700 border-l-2 border-red-500"
-                        };
-                      };
-
-                      const colors = getOperationsColors(item.name);
-
-                      if (item.subModules && item.subModules.length > 0) {
-                        const isExpanded = expandedSections.has(item.name);
-
-                        if (isMobile) {
-                          // Mobile: Collapsible vertical layout
-                          return (
-                            <div key={item.path} className="space-y-1">
-                              {/* Parent Item */}
-                              <div
-                                onClick={() => toggleSection(item.name)}
-                                className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
-                              >
-                                <div className={`flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'}`}>
-                                  <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                                  <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
+                                  </div>
                                 </div>
-                                <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-                              </div>
-
-                              {/* Internal Sections - Below Parent */}
-                              {isExpanded && (
-                                <div className={`${isMobile ? 'mobile-nav-expanded' : 'ml-6 pl-3'} space-y-1 border-l-2 border-gray-100`}>
-                                  {item.subModules.map((subModule, subIndex) => {
-                                    const SubIcon = subModule.icon;
-                                    const subIconColorClass = getIconColor(subModule.title);
-                                    const subHoverBgClass = getHoverBg(subModule.title);
-                                    const isSubActive = location === subModule.path;
+                                {/* Sub-pages */}
+                                <div className="pl-4 space-y-1 mt-1">
+                                  {subModule.subPages.map((subPage, subPageIndex) => {
+                                    const SubPageIcon = subPage.icon;
+                                    const subPageIconColorClass = getIconColor(subPage.title);
+                                    const subPageHoverBgClass = getHoverBg(subPage.title);
+                                    const isSubPageActive = location === subPage.path;
 
                                     return (
                                       <div
-                                        key={subIndex}
+                                        key={subPageIndex}
                                         onClick={() => {
-                                          setLocation(subModule.path);
+                                          setLocation(subPage.path);
                                           setIsHamburgerOpen(false);
                                         }}
-                                        className={`cursor-pointer ${isMobile ? 'mobile-nav-item' : 'p-2'} flex items-start ${isMobile ? 'space-x-3' : 'space-x-2'} rounded-md transition-all duration-200 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
+                                        className={`cursor-pointer p-2 flex items-start space-x-2 rounded-md transition-all duration-200 ${isSubPageActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subPageHoverBgClass}`}
                                       >
-                                        <SubIcon className={`${isMobile ? 'h-4 w-4 mt-0.5' : 'h-3 w-3'} flex-shrink-0 ${subIconColorClass}`} />
+                                        <SubPageIcon className={`h-4 w-4 mt-0.5 flex-shrink-0 ${subPageIconColorClass}`} />
                                         <div className="flex-1 min-w-0">
-                                          <p className={`font-medium ${isMobile ? 'text-sm' : 'text-xs'} text-gray-900 leading-tight`}>{subModule.title}</p>
-                                          <p className={`${isMobile ? 'mobile-nav-subtitle' : 'text-[10px]'} text-gray-500 leading-tight mt-0.5 whitespace-normal`}>{subModule.subtitle}</p>
+                                          <p className="font-medium text-sm text-gray-900 leading-tight">{subPage.title}</p>
+                                          <p className="text-xs text-gray-500 leading-tight mt-0.5 whitespace-normal">{subPage.subtitle}</p>
                                         </div>
                                       </div>
                                     );
                                   })}
                                 </div>
-                              )}
+                              </div>
+                            );
+                          }
+
+                          // Regular module without sub-pages
+                          return (
+                            <div
+                              key={subIndex}
+                              onClick={() => {
+                                setLocation(subModule.path);
+                                setIsHamburgerOpen(false);
+                              }}
+                              className={`cursor-pointer p-3 flex items-start space-x-3 rounded-md transition-all duration-200 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
+                            >
+                              <SubIcon className="h-4 w-4 flex-shrink-0 text-current" />
+                              <div className="flex-1 min-w-0">
+                                <p className="font-medium text-sm text-gray-900 leading-tight">{subModule.title}</p>
+                                <p className="text-xs text-gray-500 leading-tight mt-0.5 whitespace-normal">{subModule.subtitle}</p>
+                              </div>
                             </div>
                           );
-                        } else {
-                          // Desktop: Nested dropdown (original behavior)
-                          return (
-                            <DropdownMenuSub key={item.path}>
-                              <DropdownMenuSubTrigger className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}>
-                                <div className={`flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'}`}>
-                                  <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                                  <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
-                                </div>
-
-                              </DropdownMenuSubTrigger>
-                              <DropdownMenuSubContent className={`${isMobile ? 'w-80' : 'w-72'} bg-gradient-to-b from-slate-50 to-white shadow-lg border border-slate-200 rounded-lg max-h-[60vh] overflow-y-auto`}>
-                                {item.subModules.map((subModule, subIndex) => {
-                                  const SubIcon = subModule.icon;
-                                  const subIconColorClass = getIconColor(subModule.title);
-                                  const subHoverBgClass = getHoverBg(subModule.title);
-                                  const isSubActive = location === subModule.path;
-
-                                  return (
-                                    <DropdownMenuItem
-                                      key={subIndex}
-                                      onClick={() => {
-                                        setLocation(subModule.path);
-                                        setIsHamburgerOpen(false);
-                                      }}
-                                      className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'} rounded-md transition-all duration-200 mx-1 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
-                                    >
-                                      <SubIcon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${subIconColorClass}`} />
-                                      <div className="flex-1">
-                                        <p className={`font-medium ${isMobile ? 'text-base' : 'text-sm'} text-gray-900`}>{subModule.title}</p>
-                                        <p className={`${isMobile ? 'text-sm' : 'text-xs'} text-gray-500 truncate`}>{subModule.subtitle}</p>
-                                      </div>
-                                    </DropdownMenuItem>
-                                  );
-                                })}
-                              </DropdownMenuSubContent>
-                            </DropdownMenuSub>
-                          );
-                        }
-                      }
-
-                      return (
-                        <DropdownMenuItem
-                          key={item.path}
-                          onClick={() => {
-                            setLocation(item.path);
-                            setIsHamburgerOpen(false);
-                          }}
-                          className={`cursor-pointer ${isMobile ? 'p-4' : 'p-3'} flex items-center ${isMobile ? 'space-x-4' : 'space-x-3'} rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
-                        >
-                          <Icon className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'} flex-shrink-0 ${colors.icon}`} />
-                          <span className={`font-medium ${isMobile ? 'text-base' : 'text-sm'}`}>{item.name}</span>
-                        </DropdownMenuItem>
-                      );
-                    })}
+                        })}
+                      </div>
+                    )}
                   </div>
-                </div>
+                );
+              } else {
+                // Simple navigation item without sub-modules
+                return (
+                  <div
+                    key={item.path}
+                    onClick={() => {
+                      setLocation(item.path);
+                      setIsHamburgerOpen(false);
+                    }}
+                    className={`cursor-pointer p-4 flex items-center space-x-4 rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
+                  >
+                    <Icon className="h-5 w-5 flex-shrink-0 text-current" />
+                    <span className="font-medium text-base">{item.name}</span>
+                  </div>
+                );
+              }
+            })}
+          </div>
+
+          {/* Operations Items */}
+          {operationsItems.length > 0 && (
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">Operations</h3>
+              <div className="space-y-1">
+                {operationsItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = isNavigationItemActive(item);
+                  const colors = {
+                    icon: isActive ? "text-azam-blue" : "text-gray-500",
+                    hover: "hover:bg-azam-blue/5 hover:text-azam-blue",
+                    active: "bg-azam-blue/5 text-azam-blue border-l-2 border-azam-blue"
+                  };
+
+                  if (item.subModules && item.subModules.length > 0) {
+                    const isExpanded = expandedSections.has(item.name);
+
+                    return (
+                      <div key={item.path} className="space-y-1">
+                        {/* Parent Item */}
+                        <div
+                          onClick={() => toggleSection(item.name)}
+                          className={`cursor-pointer p-4 flex items-center justify-between rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
+                        >
+                          <div className="flex items-center space-x-4">
+                            <Icon className="h-5 w-5 flex-shrink-0 text-current" />
+                            <span className="font-medium text-base">{item.name}</span>
+                          </div>
+                          <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                        </div>
+
+                        {/* Expanded Sections */}
+                        {isExpanded && (
+                          <div className="ml-6 pl-3 space-y-1 border-l-2 border-gray-100">
+                            {item.subModules.map((subModule, subIndex) => {
+                              const SubIcon = subModule.icon;
+                              const subIconColorClass = getIconColor(subModule.title);
+                              const subHoverBgClass = getHoverBg(subModule.title);
+                              const isSubActive = location === subModule.path;
+
+                              return (
+                                <div
+                                  key={subIndex}
+                                  onClick={() => {
+                                    setLocation(subModule.path);
+                                    setIsHamburgerOpen(false);
+                                  }}
+                                  className={`cursor-pointer p-3 flex items-start space-x-3 rounded-md transition-all duration-200 ${isSubActive ? 'bg-azam-blue/10 text-azam-blue border-l-2 border-azam-blue' : subHoverBgClass}`}
+                                >
+                                  <SubIcon className="h-4 w-4 flex-shrink-0 text-current" />
+                                  <div className="flex-1 min-w-0">
+                                    <p className="font-medium text-sm text-gray-900 leading-tight">{subModule.title}</p>
+                                    <p className="text-xs text-gray-500 leading-tight mt-0.5 whitespace-normal">{subModule.subtitle}</p>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div
+                        key={item.path}
+                        onClick={() => {
+                          setLocation(item.path);
+                          setIsHamburgerOpen(false);
+                        }}
+                        className={`cursor-pointer p-4 flex items-center space-x-4 rounded-md transition-all duration-200 mx-1 ${isActive ? colors.active : colors.hover}`}
+                      >
+                        <Icon className="h-5 w-5 flex-shrink-0 text-current" />
+                        <span className="font-medium text-base">{item.name}</span>
+                      </div>
+                    );
+                  }
+                })}
               </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </div>
+          )}
         </div>
+      </div>
+
+      <div className="relative bg-azam-blue px-2 sm:px-3 md:px-4 py-0">
+        <div className={`flex items-center justify-between w-full ${isMobile ? 'h-12' : 'h-10'}`}>
+          {/* Hamburger Menu Button */}
+          <div className={`flex-shrink-0 ${isMobile ? 'mr-2' : 'mr-3'}`}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
+              className={`flex items-center justify-center p-0 text-white hover:bg-white/10 rounded-lg transition-all duration-300 hover:scale-105 ${
+                isMobile ? 'w-10 h-10' : 'w-9 h-9'
+              }`}
+            >
+              <Menu className={`${isMobile ? 'h-6 w-6' : 'h-5 w-5'}`} />
+            </Button>
+          </div>
 
         {/* Mobile: Hide navigation items completely - show only hamburger menu */}
         {isMobile ? (
@@ -1117,7 +920,6 @@ export default function NavHeader() {
                             <Icon className={`h-4 w-4 flex-shrink-0 ${colors.icon}`} />
                             <span className="font-medium text-sm">{item.name}</span>
                           </div>
-
                         </DropdownMenuSubTrigger>
                         <DropdownMenuSubContent className="w-64 bg-gradient-to-b from-slate-50 to-white shadow-lg border border-slate-200 rounded-lg">
                           {item.subModules.map((subModule, subIndex) => {
@@ -1181,5 +983,6 @@ export default function NavHeader() {
         </div>
       )}
     </div>
+    </>
   );
 }
