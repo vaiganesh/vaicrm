@@ -300,7 +300,7 @@ export default function NewIncidentManagement() {
   }, [hasUnsavedChanges]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header Bar - Consolidated Single Bar */}
       <div className="bg-white border-b border-gray-300 shadow-sm w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8">
